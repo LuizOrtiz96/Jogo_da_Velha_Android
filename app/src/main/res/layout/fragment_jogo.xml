@@ -10,34 +10,19 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/linearJogador1"
+        style="@style/linearJogador">
 
         <TextView
             android:id="@+id/jogador1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:background="@color/cinza_claro"
-            android:padding="10dp"
-            android:text="@string/jogador_1"
-            android:textColor="@color/teal_700"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            style="@style/textViewJog"
+            android:text="@string/jogador_1"/>
 
         <TextView
             android:id="@+id/placar1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/cinza_claro"
-            android:padding="10dp"
+            style="@style/textViewPlacar"
             android:text="@string/placar_1"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+             />
     </LinearLayout>
 
     <View
@@ -47,34 +32,18 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/linearJogador2"
+        style="@style/linearJogador">
 
         <TextView
             android:id="@+id/jogador2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:background="@color/cinza_claro"
-            android:padding="10dp"
-            android:text="@string/jogador_2"
-            android:textColor="@color/teal_700"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            style="@style/textViewJog"
+            android:text="@string/jogador_2"/>
 
         <TextView
             android:id="@+id/placar2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/cinza_claro"
-            android:padding="10dp"
-            android:text="@string/placar_2"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            style="@style/textViewPlacar"
+            android:text="@string/placar_2"/>
     </LinearLayout>
 
     <View
@@ -90,69 +59,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:id="@+id/bt00"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                style="@style/estilo_bt"
+                android:id="@+id/bt00"/>
+
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt01"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt02"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
 
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt10"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt11"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt12"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
 
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt20"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt21"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
             <Button
+                style="@style/estilo_bt"
                 android:id="@+id/bt22"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"/>
+                />
 
         </TableRow>
     </TableLayout>

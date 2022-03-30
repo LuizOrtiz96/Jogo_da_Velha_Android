@@ -9,6 +9,9 @@
     <string name="placar_2">0</string>
     <string name="jogo_da_velha">Jogo da Velha</string>
     <string name="preferencias">Preferências</string>
+    <string name="vencedor">Você Venceu</string>
+    <string name="perdedor">Você Perdeu</string>
+    <string name="empate">Ops Deu Velha !!!</string>
 
 
 </resources>

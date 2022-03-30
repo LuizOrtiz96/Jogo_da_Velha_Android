@@ -11,4 +11,7 @@
     <color name="cinza_claro">#E5E5E5</color>
     <color name ="redin">#E38A8A</color>
     <color name ="green">#daedd2</color>
+    <color name="LightSkyBlue">#87CEFA</color>
+    <color name="SpringGreen">#00FF7F</color>
+    <color name="Crimson">#DC143C</color>
 </resources>
