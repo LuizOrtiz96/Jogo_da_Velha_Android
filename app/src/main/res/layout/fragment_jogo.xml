@@ -40,8 +40,32 @@
             style="@style/textViewJog"
             android:text="@string/jogador_2"/>
 
+
+
         <TextView
             android:id="@+id/placar2"
+            style="@style/textViewPlacar"
+            android:text="@string/placar_2"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black" />
+
+    <LinearLayout
+
+        style="@style/linearJogador">
+
+        <TextView
+            android:id="@+id/deuVelha"
+            style="@style/textViewJog"
+            android:text="@string/empate"/>
+
+
+
+        <TextView
+            android:id="@+id/placarVelha"
             style="@style/textViewPlacar"
             android:text="@string/placar_2"/>
     </LinearLayout>

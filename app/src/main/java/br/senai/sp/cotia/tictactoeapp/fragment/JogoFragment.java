@@ -1,12 +1,20 @@
 package br.senai.sp.cotia.tictactoeapp.fragment;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +25,7 @@ import java.util.Random;
 
 import br.senai.sp.cotia.tictactoeapp.R;
 import br.senai.sp.cotia.tictactoeapp.databinding.FragmentJogoBinding;
+import br.senai.sp.cotia.tictactoeapp.util.PrefsUtil;
 
 
 public class JogoFragment extends Fragment {
@@ -27,16 +36,20 @@ public class JogoFragment extends Fragment {
     // Matriz de String que representa o tabuleiro
     private String[][] tabuleiro;
     // Variáveis para os símbolos
-    private String simbJog1, simbJog2, simbolo;
+    private String simbJog1, simbJog2, simbolo, nomeJog1, nomeJog2, nome;
     // Variável random para sortear quem inicia
     private Random random;
     // Variável para controlar o número de jogadas
     private int numJogadas = 0;
+    // Variáveis para o placar
+    private int placarJog1 = 0, placarJog2 = 0, placarVelha = 0;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Habilita o menu
+        setHasOptionsMenu(true);
         //instanciar o binding
         binding = FragmentJogoBinding.inflate(inflater, container, false);
 
@@ -80,8 +93,18 @@ public class JogoFragment extends Fragment {
         }
 
         // Define os símbolos do Joagador 1 e Jogador 2
-        simbJog1 = "X";
-        simbJog2 = "O";
+        simbJog1 = PrefsUtil.getSimboloJog1(getContext());
+        simbJog2 = PrefsUtil.getSimboloJog2(getContext());
+
+        // Define os nomes dos Jogadores 1 e 2
+        nomeJog1 = PrefsUtil.getNomeJog1(getContext());
+        nomeJog2 = PrefsUtil.getNomeJog2(getContext());
+
+        // Atualiza o placar com os simbolos
+        binding.jogador1.setText(getResources().getString(R.string.jogador_1, simbJog1, nomeJog1));
+        binding.jogador2.setText(getResources().getString(R.string.jogador_2, simbJog2, nomeJog2));
+        //// Atualiza o placar com os nome
+
 
         // Instanciar o Random
         random = new Random();
@@ -94,6 +117,19 @@ public class JogoFragment extends Fragment {
 
         //retorna a view root da binding
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // PEga a referência para a activity
+        AppCompatActivity minhaActivity = (AppCompatActivity) getActivity();
+        // Oculta a action bar
+        minhaActivity.getSupportActionBar().show();
+        // desabilita a seta de retornar
+        minhaActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+
     }
 
     private void sorteia() {
@@ -126,6 +162,7 @@ public class JogoFragment extends Fragment {
 
         }
     };*/
+
 
     private boolean venceu() {
         // Verifica se venceu nas Linhas
@@ -175,7 +212,71 @@ public class JogoFragment extends Fragment {
         }
         // Zerar o número de jogadas
         numJogadas = 0;
+        // Sorteia o próximo
+        sorteia();
+        // Atualiza a vez
+        atualizaVez();
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Verificar qual item do menu foi selecionado
+        switch (item.getItemId()) {
+            // caso seja a opção de reset
+            case R.id.menu_resetar:
+                AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+                adb.setTitle(getResources().getString(R.string.reset));
+
+
+                adb.setMessage(" Clique em OK para jogar novamente").setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+
+                                placarJog1 = 0;
+                                placarJog2 = 0;
+                                placarVelha = 0;
+                                atualizaPlacar();
+                                resetaGame();
+                            }
+
+                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+
+                    ;
+                });
+
+                AlertDialog alertDialog = adb.create();
+                alertDialog.show();
+
+
+                break;
+            //caso seja a opção de preferências
+            case R.id.menu_pref:
+                NavHostFragment.findNavController(JogoFragment.this).
+                        navigate(R.id.action_jogoFragment_to_prefFragment);
+                break;
+
+            case R.id.menu_inicio:
+                NavHostFragment.findNavController(JogoFragment.this).
+                        navigate(R.id.action_jogoFragment_to_inicioFragment);
+        }
+        return true;
+    }
+
+    private void atualizaPlacar() {
+        binding.placar1.setText(placarJog1 + "");
+        binding.placar2.setText(placarJog2 + "");
+        binding.placarVelha.setText(placarVelha + "");
 
     }
 
@@ -203,10 +304,38 @@ public class JogoFragment extends Fragment {
         if (numJogadas >= 5 && venceu()) {
             // informa que houve um vencedor
             Toast.makeText(getContext(), R.string.vencedor, Toast.LENGTH_LONG).show();
+            // Verifica quem venceu
+            if (simbolo.equals(simbJog1)) {
+                placarJog1++;
+            } else {
+                placarJog2++;
+            }
+            if (placarJog1 >= 5) {
+                resetaGame();
+                atualizaVez();
+                Toast.makeText(getContext(), R.string.reset, Toast.LENGTH_LONG).show();
+                placarJog1 = 0;
+                placarJog2 = 0;
+                placarVelha = 0;
+            } else if (placarJog2 >= 5) {
+                resetaGame();
+                atualizaVez();
+                Toast.makeText(getContext(), R.string.reset, Toast.LENGTH_LONG).show();
+                placarJog1 = 0;
+                placarJog2 = 0;
+                placarVelha = 0;
+
+            }
+
+            //Atualiza Placar
+            atualizaPlacar();
+
             //Reseta
             resetaGame();
         } else if (numJogadas == 9) {
             Toast.makeText(getContext(), R.string.empate, Toast.LENGTH_LONG).show();
+            placarVelha++;
+            atualizaPlacar();
             //Reseta
             resetaGame();
         } else {
